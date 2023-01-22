@@ -18,8 +18,8 @@ namespace csobra
 
 		internal void Move()
 		{
-			x = Raylib.GetRandomValue(0, 39);
-			y = Raylib.GetRandomValue(0, 39);
+			x = Raylib.GetRandomValue(1, 38);
+			y = Raylib.GetRandomValue(1, 38);
 		}
 	}
 }

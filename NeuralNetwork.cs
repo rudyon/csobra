@@ -35,7 +35,7 @@ namespace csobra
 		{
 			for (int i = 0; i < layers.Length; i++)
 			{
-				layers[i].Mutate();
+				layers[i].Mutate(1);
 			}
 		}
 	}

@@ -19,7 +19,7 @@ namespace csobra
 			{
 				for (int j = 0; j < weights.GetLength(1); j++)
 				{
-					weights[i, j] = Raylib.GetRandomValue(0, 20);
+					weights[i, j] = Raylib.GetRandomValue(-100, 100);
 				}
 			}
 
@@ -27,7 +27,7 @@ namespace csobra
 
 			for (int i = 0; i < biases.Length; i++)
 			{
-				biases[i] = Raylib.GetRandomValue(0, 20);
+				biases[i] = Raylib.GetRandomValue(-100, 100);
 			}
 		}
 
@@ -44,7 +44,7 @@ namespace csobra
 					weighted_input += inputs[j] * weights[j, i];
 				}
 
-				weighted_inputs[i] = weighted_input;
+				weighted_inputs[i] = Activation(weighted_input);
 			}
 
 			return weighted_inputs;
@@ -55,14 +55,19 @@ namespace csobra
 			return 1 / (1 + Math.Exp(-weighted_input));
 		}
 
-		internal void Mutate()
+		internal void Mutate(int mutation_rate)
 		{
 			for (int i = 0; i < weights.GetLength(0); i++)
 			{
 				for (int j = 0; j < weights.GetLength(1); j++)
 				{
-					weights[i, j] += Raylib.GetRandomValue(0, 1);
+					weights[i, j] += Raylib.GetRandomValue(-mutation_rate, mutation_rate);
 				}
+			}
+
+			for (int i = 0; i < biases.Length; i++)
+			{
+				biases[i] += Raylib.GetRandomValue(-mutation_rate, mutation_rate);
 			}
 		}
 	}

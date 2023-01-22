@@ -7,9 +7,10 @@ namespace csobra
 		internal int x, y;
 		public int direction;
 		public int fitness;
+		int timer = 30*5;
 		public List<Tail> tails = new List<Tail>();
 		public Fruit fruit;
-		NeuralNetwork neural_network = new NeuralNetwork(12, 8, 4);
+		NeuralNetwork neural_network = new NeuralNetwork(12, 12, 8, 16, 6, 4);
 
 		public Snake(Fruit fruit)
 		{
@@ -34,6 +35,12 @@ namespace csobra
 		internal bool Update()
 		{
 			fitness++;
+			timer--;
+
+			if (timer < 0)
+			{
+				return true;
+			}
 
 			double[] inputs = {Input1(), Input2(), Input3(), Input4(),
 								Input5(), Input6(), Input7(), Input8(),
@@ -91,7 +98,7 @@ namespace csobra
 			if (x == fruit.x && y == fruit.y)
 			{
 				fruit.Move();
-				fitness += 60;
+				fitness += 30;
 
 				if (direction == 0)
 				{
@@ -125,6 +132,7 @@ namespace csobra
 			direction = 0;
 			tails = new List<Tail>();
 			fitness = 0;
+			timer = 30*5;
 
 			tails.Add(new Tail(x - 1, y));
 			neural_network.Mutate();
@@ -133,11 +141,11 @@ namespace csobra
 		// Wall inputs
 		internal double Input1()
 		{
-			for (int i = 0; i < 5; i++)
+			for (int i = 0; i < 10; i++)
 			{
 				if (x + i > 39)
 				{
-					return 1;
+					return i;
 				}
 			}
 
@@ -146,11 +154,11 @@ namespace csobra
 
 		internal double Input2()
 		{
-			for (int i = 0; i < 5; i++)
+			for (int i = 0; i < 10; i++)
 			{
 				if (y + i > 39)
 				{
-					return 1;
+					return i;
 				}
 			}
 
@@ -159,11 +167,11 @@ namespace csobra
 
 		internal double Input3()
 		{
-			for (int i = 0; i < 5; i++)
+			for (int i = 0; i < 10; i++)
 			{
 				if (x - i < 0)
 				{
-					return 1;
+					return i;
 				}
 			}
 
@@ -172,11 +180,11 @@ namespace csobra
 
 		internal double Input4()
 		{
-			for (int i = 0; i < 5; i++)
+			for (int i = 0; i < 10; i++)
 			{
 				if (y - i < 0)
 				{
-					return 1;
+					return i;
 				}
 			}
 
@@ -186,11 +194,11 @@ namespace csobra
 		// Food inputs
 		internal double Input5()
 		{
-			for (int i = 0; i < 5; i++)
+			for (int i = 0; i < 10; i++)
 			{
 				if (x + i == fruit.x)
 				{
-					return 1;
+					return i;
 				}
 			}
 
@@ -199,11 +207,11 @@ namespace csobra
 
 		internal double Input6()
 		{
-			for (int i = 0; i < 5; i++)
+			for (int i = 0; i < 10; i++)
 			{
 				if (y + i > fruit.y)
 				{
-					return 1;
+					return i;
 				}
 			}
 
@@ -212,11 +220,11 @@ namespace csobra
 
 		internal double Input7()
 		{
-			for (int i = 0; i < 5; i++)
+			for (int i = 0; i < 10; i++)
 			{
 				if (x - i < fruit.x)
 				{
-					return 1;
+					return i;
 				}
 			}
 
@@ -225,11 +233,11 @@ namespace csobra
 
 		internal double Input8()
 		{
-			for (int i = 0; i < 5; i++)
+			for (int i = 0; i < 10; i++)
 			{
 				if (y - i < fruit.y)
 				{
-					return 1;
+					return i;
 				}
 			}
 
@@ -239,13 +247,13 @@ namespace csobra
 		// Tail inputs
 		internal double Input9()
 		{
-			for (int i = 0; i < 5; i++)
+			for (int i = 0; i < 10; i++)
 			{
 				for (int j = 0; j < tails.Count(); j++)
 				{	
 					if (x + i == tails[j].x)
 					{
-						return 1;
+						return i;
 					}
 				}
 			}
@@ -255,13 +263,13 @@ namespace csobra
 
 		internal double Input10()
 		{
-			for (int i = 0; i < 5; i++)
+			for (int i = 0; i < 10; i++)
 			{
 				for (int j = 0; j < tails.Count(); j++)
 				{	
 					if (y + i == tails[j].y)
 					{
-						return 1;
+						return i;
 					}
 				}
 			}
@@ -271,13 +279,13 @@ namespace csobra
 
 		internal double Input11()
 		{
-			for (int i = 0; i < 5; i++)
+			for (int i = 0; i < 10; i++)
 			{
 				for (int j = 0; j < tails.Count(); j++)
 				{	
 					if (x - i == tails[j].x)
 					{
-						return 1;
+						return i;
 					}
 				}
 			}
@@ -287,13 +295,13 @@ namespace csobra
 
 		internal double Input12()
 		{
-			for (int i = 0; i < 5; i++)
+			for (int i = 0; i < 10; i++)
 			{
 				for (int j = 0; j < tails.Count(); j++)
 				{	
 					if (y - i == tails[j].y)
 					{
-						return 1;
+						return i;
 					}
 				}
 			}
