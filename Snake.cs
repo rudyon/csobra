@@ -9,7 +9,7 @@ namespace csobra
 		public int fitness;
 		public List<Tail> tails = new List<Tail>();
 		public Fruit fruit;
-		NeuralNetwork neural_network = new NeuralNetwork(8, 6, 4);
+		NeuralNetwork neural_network = new NeuralNetwork(12, 8, 4);
 
 		public Snake(Fruit fruit)
 		{
@@ -35,7 +35,9 @@ namespace csobra
 		{
 			fitness++;
 
-			double[] inputs = {Input1(), Input2(), Input3(), Input4(), Input5(), Input6(), Input7(), Input8()};
+			double[] inputs = {Input1(), Input2(), Input3(), Input4(),
+								Input5(), Input6(), Input7(), Input8(),
+								Input9(), Input10(), Input11(), Input12()};
 			double output = neural_network.Run(inputs);
 
 			if (output == 0 && direction != 2)
@@ -118,18 +120,14 @@ namespace csobra
 
 		public void Mutate()
 		{
-			this.x = 15;
-			this.y = 15;
-			this.direction = 0;
+			x = 15;
+			y = 15;
+			direction = 0;
 			tails = new List<Tail>();
+			fitness = 0;
 
 			tails.Add(new Tail(x - 1, y));
 			neural_network.Mutate();
-		}
-
-		public void DrawNeuralNetowk()
-		{
-
 		}
 
 		// Wall inputs
@@ -232,6 +230,71 @@ namespace csobra
 				if (y - i < fruit.y)
 				{
 					return 1;
+				}
+			}
+
+			return 0;
+		}
+
+		// Tail inputs
+		internal double Input9()
+		{
+			for (int i = 0; i < 5; i++)
+			{
+				for (int j = 0; j < tails.Count(); j++)
+				{	
+					if (x + i == tails[j].x)
+					{
+						return 1;
+					}
+				}
+			}
+
+			return 0;
+		}
+
+		internal double Input10()
+		{
+			for (int i = 0; i < 5; i++)
+			{
+				for (int j = 0; j < tails.Count(); j++)
+				{	
+					if (y + i == tails[j].y)
+					{
+						return 1;
+					}
+				}
+			}
+
+			return 0;
+		}
+
+		internal double Input11()
+		{
+			for (int i = 0; i < 5; i++)
+			{
+				for (int j = 0; j < tails.Count(); j++)
+				{	
+					if (x - i == tails[j].x)
+					{
+						return 1;
+					}
+				}
+			}
+
+			return 0;
+		}
+
+		internal double Input12()
+		{
+			for (int i = 0; i < 5; i++)
+			{
+				for (int j = 0; j < tails.Count(); j++)
+				{	
+					if (y - i == tails[j].y)
+					{
+						return 1;
+					}
 				}
 			}
 

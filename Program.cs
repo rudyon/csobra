@@ -28,15 +28,6 @@ namespace csobra
 			
 			while (!Raylib.WindowShouldClose())
 			{
-				if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE))
-				{
-					Raylib.SetTargetFPS(60);
-				}
-				else
-				{
-					Raylib.SetTargetFPS(30);
-				}
-
 				if (snake.Update())
 				{
 					if (current < gen_size)
